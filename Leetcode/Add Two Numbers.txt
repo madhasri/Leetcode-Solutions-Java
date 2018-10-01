@@ -1,0 +1,131 @@
+
+/*
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+*/
+
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        
+        ListNode temp1 = l1;
+        ListNode temp2 = l2;
+        int d1,d2,digit,res;
+        ListNode sumList = new ListNode(-1);
+        sumList.next = null;
+        ListNode temp3 = sumList;
+        int carry = 0;
+        while(temp1 != null && temp2 != null)
+        {
+            d1 = temp1.val;
+            d2 = temp2.val;
+            
+            res = d1 + d2 + carry;
+            if(res > 9)
+            {digit = res - 10;
+                carry = 1;
+            }
+            else
+            {   digit = res;
+                carry = 0;
+            }
+            if(temp3.val == -1)
+                temp3.val = digit;
+            else
+            {
+            ListNode newNode = new ListNode(digit);
+            newNode.next = null;
+            temp3.next = newNode;
+            temp3 = newNode;    
+            }
+            temp1 = temp1.next;
+            temp2 = temp2.next;
+            
+        }
+        
+        if(temp1 == null && temp2 == null && carry == 1)
+        {
+            ListNode newNode = new ListNode(1);
+            newNode.next = null;
+            temp3.next = newNode;
+            temp3 = newNode;
+        }
+        
+        if(temp1 != null)
+        {
+            //copy the remaining numbers as is
+            while(temp1 != null)
+            {
+                res = temp1.val + carry;
+                if(res > 9)
+                   {digit = res - 10;
+                    carry = 1;
+                   }
+                else
+                {   digit = res;
+                    carry = 0;
+                }
+                ListNode newNode = new ListNode(digit);
+                newNode.next = null;
+                temp3.next = newNode;
+                temp3 = newNode;
+                temp1 = temp1.next;
+            }
+            
+            if(carry == 1)
+            {
+                ListNode newNode = new ListNode(1);
+            newNode.next = null;
+            temp3.next = newNode;
+            temp3 = newNode;
+            }
+                
+        }
+        
+        if(temp2 != null)
+        {
+            //copy the remaining numbers as is
+            while(temp2 != null)
+            {
+                res = temp2.val + carry;
+                if(res > 9)
+                   {digit = res - 10;
+                    carry = 1;
+                   }
+                else
+                {
+                    digit = res;
+                    carry = 0;
+                }
+                
+                ListNode newNode = new ListNode(digit);
+                newNode.next = null;
+                temp3.next = newNode;
+                temp3 = newNode;
+                temp2 = temp2.next;
+            }
+            if(carry == 1)
+            {
+                ListNode newNode = new ListNode(1);
+            newNode.next = null;
+            temp3.next = newNode;
+            temp3 = newNode;
+            }
+        }
+        
+        return sumList;
+        
+        
+    }
+}
